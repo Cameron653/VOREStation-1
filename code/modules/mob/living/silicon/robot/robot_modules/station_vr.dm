@@ -15,6 +15,7 @@
 					LANGUAGE_ENOCHIAN	= 0
 					)
 	var/vr_sprites = list()
+	var/personal_sprites = list()
 
 /obj/item/weapon/robot_module/robot/clerical
 	languages = list(
@@ -51,6 +52,11 @@
 
 /obj/item/weapon/robot_module/proc/vr_add_sprites() // Adds sprites from this file into list of avialible ones for global modules
 	sprites += vr_sprites
+	return
+
+/obj/item/weapon/robot_module/proc/vr_get_personal_sprites() // Adds whitelisted sprites to the list of sprites that can be selected.
+	//Do some type of check here to see if the user's ckey is on some sort of list and, if so, give them access to the whitelisted sprites.
+	sprites += personal_sprites
 	return
 
 /obj/item/weapon/robot_module/robot/medical/surgeon/vr_new() //Surgeon Bot
@@ -138,7 +144,10 @@
 	sprites = list(
 					"K9 hound" = "k9",
 					"K9 Alternative (Static)" = "k92",
-					"Secborg model V-2" = "secborg"
+					"Secborg model V-2" = "secborg",
+					"Whitelisted Sprites" = "k9")
+	personal_sprites = list(
+					"K9 Hound (Etheo)" = "ek9"
 					)
 	channels = list("Security" = 1)
 	networks = list(NETWORK_SECURITY)

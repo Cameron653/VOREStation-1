@@ -998,7 +998,23 @@
 			icontype = module_sprites[1]
 	else
 		icontype = input("Select an icon! [triesleft ? "You have [triesleft] more chance\s." : "This is your last try."]", "Robot Icon", icontype, null) in module_sprites
-		if(notransform)				//VOREStation edit start: sprite animation
+		if(icontype == "Whitelisted Sprites")   //VOREStation edit start
+			module_sprites -= module_sprites //Remove the module sprites
+			vr_get_personal_sprites() //And add the whitelisted ones
+
+			if(!module_sprites.len)
+				to_chat(src, "You have no sprites in which you are whitelisted for.")
+				return
+
+			icontype = input("Select an icon!")
+			if(notransform)
+				to_chat(src, "Your current transformation has not finished yet!")
+				choose_icon(icon_selection_tries, module_sprites)
+				return
+			else
+				transform_with_anim()    //VOREStation edit end: sprite animation
+
+		else if(notransform)				//VOREStation edit start: sprite animation
 			to_chat(src, "Your current transformation has not finished yet!")
 			choose_icon(icon_selection_tries, module_sprites)
 			return
@@ -1007,6 +1023,7 @@
 
 	if(icontype == "Custom")
 		icon = CUSTOM_ITEM_SYNTH
+
 	else // This is to fix an issue where someone with a custom borg sprite chooses a non-custom sprite and turns invisible.
 		vr_sprite_check() //VOREStation Edit
 	icon_state = module_sprites[icontype]
